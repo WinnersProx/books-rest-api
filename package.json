@@ -1,0 +1,26 @@
+{
+  "name": "books-rest-api",
+  "version": "1.0.0",
+  "description": "A containerized books api",
+  "main": "src/server.js",
+  "repository": "https://github.com/WinnersProx/books-rest-api.git",
+  "author": "Winner <bihames4vainqueur@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.8",
+    "slugify": "^1.4.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6",
+    "prettier": "^2.2.1"
+  },
+  "prettier": {
+    "tabWidth": 4
+  },
+  "scripts": {
+    "start": "node src/server",
+    "dev": "nodemon src/server"
+  }
+}
