@@ -1,0 +1,45 @@
+version: "3"
+
+services: 
+  books-api: 
+    restart: always
+    build:
+      context: . # the location of our docker image file
+      dockerfile: Dockerfile
+    volumes:
+      - /app/node_modules
+      - .:/app # map everything we have in our /app directory
+    ports:
+      - "5000:5000" # map the port in the container to the one in the local machine
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URI=mongodb://admin:admin12345@mongodb
+  
+  mongodb:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin12345
+    volumes:
+      - mongodb-data:/data/db
+  
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin12345
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin12345
+    volumes:
+      - mongodb-data
+volumes:
+  mongodb-data:
+    driver: local
